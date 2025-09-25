@@ -11,63 +11,25 @@ Game developers usually have to manually program every way players can interact 
 
 ------------------------------------------
 
-🚀 Getting Started
-Requirements
-
-Install dependencies:
-
-pip install -r requirements.txt
-
-
-Main libraries:
-
-Open3D
- – mesh/point cloud processing
-
-NumPy, SciPy – math utilities
-
-scikit-learn – clustering support
-
-trimesh – mesh I/O helpers
-
-Running the demo
-python demos/run_one.py data/chair_01/mesh.glb
-
-
-This will:
-
-Load the chair mesh
-
-Decompose it into sub-regions
-
-Extract features
-
-Classify affordances
-
-Save outputs:
-
-annotations/chair_01_pred.json (predicted labels)
-
-out/chair_01_overlay.png (visualized regions)
-
 
 -----------------------------------------
 REPO STRUCTURE
-
+------------------
+Open3D-Project/
 Open3D-Project/
 │
-├── src/              # core modules
-│   ├── io.py         # mesh/point cloud loading
-│   ├── decompose.py  # segmentation (planes, clusters)
-│   ├── features.py   # compute geometric descriptors
-│   └── rules.py      # affordance mapping
+├── src/ # core modules
+│ ├── io.py # mesh/point cloud loading
+│ ├── decompose.py # segmentation (planes, clusters)
+│ ├── features.py # compute geometric descriptors
+│ └── rules.py # affordance mapping
 │
-├── data/             # sample furniture meshes
-├── annotations/      # labeled datasets + predictions
-├── notebooks/        # experimental Jupyter notebooks
-├── results/          # visualizations, metrics
-├── notes/            # research notes, readings
-├── demos/            # runnable scripts
+├── data/ # sample furniture meshes
+├── annotations/ # labeled datasets + predictions
+├── notebooks/ # experimental Jupyter notebooks
+├── results/ # visualizations, metrics
+├── notes/ # research notes, readings
+├── demos/ # runnable scripts
 ├── README.md
 ├── requirements.txt
 └── main.py
@@ -77,11 +39,11 @@ Open3D-Project/
 
 
 
-
+-------------------------------------
 
 
 📊 Deliverables
-
+-----------------------
 Modular Open3D codebase
 
 Tiny labeled dataset (4–5 furniture models)
