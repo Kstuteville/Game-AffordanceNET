@@ -1,4 +1,0 @@
-# connect featues to affordances
-
-
-
