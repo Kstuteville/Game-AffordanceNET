@@ -1,7 +1,12 @@
-Game Affordance Net --> 3D Part Segmentation + Geometry Priors for Gameplay Roles
+Game Affordance Net --> Mesh-Based Part Segmentation + Geometry Priors for Gameplay Roles
 
-We train a point-cloud part-segmentation model (PointNet++/DGCNN) on ~5 PartNet categories, collapse fine-grained labels → gameplay roles (e.g., chair_leg_* → leg), and add geometry plausibility checks to make predictions game-usable (e.g., “seat must be roughly horizontal and not 2m tall”). This repo is a semester prototype toward a larger “Game Affordance Net.”
+This project trains a mesh-native segmentation network (MeshCNN / DGNet) on a small subset of PartNet v0 object categories to infer gameplay-relevant roles
+
+Fine-grained PartNet part labels (e.g., chair_leg_back_left) are collapsed into a concise gameplay vocabulary, and the model’s predictions are refined with geometry-based plausibility checks to ensure they make physical sense for in-engine use. For example, a “seat” must be mostly horizontal, not two meters above ground, and a “handle” should protrude and be grasp-sized.
+
+Goal: Produce engine-agnostic affordance representations—clean, topology-consistent face-level masks plus compact geometric parameters (planes, axes, bounds) per affordance island—that can be consumed by thin adapters for Unreal and Unity to auto-instantiate interaction mechanics.
+
 
 Why this matters:
-Designers need course, reliable roles (seats, backrest, leg, handle, flat_surface) instead of dozens of tiny labels.
-Geometry priors reduce black box weirdness and improve downstream use with colliders, triggers, placement in Games.
+Designers need high-level, reusable roles—like seat, backrest, handle, or flat_surface—instead of dozens of dataset-specific labels. These coarse roles make 3D assets immediately usable for gameplay, interaction design, and level prototyping.
+Geometry priors bring physical common sense to neural predictions. By enforcing constraints on orientation, height, curvature, and scale, the system filters out implausible results (e.g., a “seat” facing upward two meters high) and outputs regions that align with how objects actually afford use.
