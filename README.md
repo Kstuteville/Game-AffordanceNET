@@ -4,7 +4,7 @@ This project trains a mesh-native segmentation network (MeshCNN / DGNet) on a sm
 
 Fine-grained PartNet part labels (e.g., chair_leg_back_left) are collapsed into a concise gameplay vocabulary, and the model’s predictions are refined with geometry-based plausibility checks to ensure they make physical sense for in-engine use. For example, a “seat” must be mostly horizontal, not two meters above ground, and a “handle” should protrude and be grasp-sized.
 
-Goal: Produce engine-agnostic affordance representations—clean, topology-consistent face-level masks plus compact geometric parameters (planes, axes, bounds) per affordance island—that can be consumed by thin adapters for Unreal and Unity to auto-instantiate interaction mechanics.
+Goal: Produce engine-agnostic affordance representations—clean, topology-consistent face-level masks plus compact geometric parameters (planes, axes, bounds) per affordance island, that can be consumed by thin adapters for Unreal and Unity to auto-instantiate interaction mechanics.
 
 
 Why this matters:
