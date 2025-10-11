@@ -8,5 +8,5 @@ Goal: Produce engine-agnostic affordance representations—clean, topology-consi
 
 
 Why this matters:
-Designers need high-level, reusable roles—like seat, backrest, handle, or flat_surface—instead of dozens of dataset-specific labels. These coarse roles make 3D assets immediately usable for gameplay, interaction design, and level prototyping.
+Designers need high-level, reusable roles—like seat, backrest, handle, or flat_surface. Instead of dozens of dataset-specific labels. These coarse roles make 3D assets immediately usable for gameplay, interaction design, and level prototyping.
 Geometry priors bring physical common sense to neural predictions. By enforcing constraints on orientation, height, curvature, and scale, the system filters out implausible results (e.g., a “seat” facing upward two meters high) and outputs regions that align with how objects actually afford use.
