@@ -1,0 +1,1 @@
+#load in PartNet data, read annotations
