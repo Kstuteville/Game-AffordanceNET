@@ -1,0 +1,27 @@
+node_id,parent_id,name,is_leaf,obj_ids
+0,,chair,False,"['new-2', 'new-9', 'new-8', 'original-12', 'new-3', 'new-10', 'new-1', 'original-4', 'original-8', 'original-9', 'original-3', 'new-4', 'new-6', 'new-0', 'original-7', 'original-5', 'original-6', 'original-22', 'original-10', 'original-14', 'original-16', 'original-15', 'original-13', 'original-11', 'original-17', 'original-19', 'original-18']"
+1,0,chair_back,False,"['new-2', 'new-9', 'new-8']"
+6,0,chair_arm,False,"['original-12', 'new-3', 'new-10', 'new-1', 'original-4', 'original-8', 'original-9']"
+11,0,chair_arm,False,"['original-3', 'new-4', 'new-6', 'new-0', 'original-7', 'original-5', 'original-6']"
+16,0,chair_seat,False,"['original-22', 'original-10']"
+20,0,chair_base,False,"['original-14', 'original-16', 'original-15', 'original-13', 'original-11', 'original-17', 'original-19', 'original-18']"
+2,1,back_surface,False,['new-2']
+4,1,back_frame,False,"['new-9', 'new-8']"
+7,6,arm_near_vertical_bar,True,['original-12']
+8,6,arm_horizontal_bar,True,"['new-3', 'new-10']"
+9,6,arm_sofa_style,True,['new-1']
+10,6,arm_connector,True,"['original-4', 'original-8', 'original-9']"
+12,11,arm_near_vertical_bar,True,['original-3']
+13,11,arm_horizontal_bar,True,"['new-4', 'new-6']"
+14,11,arm_sofa_style,True,['new-0']
+15,11,arm_connector,True,"['original-7', 'original-5', 'original-6']"
+17,16,seat_surface,False,['original-22']
+19,16,seat_support,True,['original-10']
+21,20,regular_leg_base,False,"['original-14', 'original-16', 'original-15', 'original-13', 'original-11', 'original-17', 'original-19', 'original-18']"
+3,2,back_single_surface,True,['new-2']
+5,4,back_frame_horizontal_bar,True,"['new-9', 'new-8']"
+18,17,seat_single_surface,True,['original-22']
+22,21,leg,True,"['original-14', 'original-16', 'original-15']"
+23,21,leg,True,['original-13']
+24,21,leg,True,['original-11']
+25,21,leg,True,"['original-17', 'original-19', 'original-18']"
