@@ -101,7 +101,7 @@ If you use this work, please cite:
 
 ---
 
-##  Team (add yours)
+##  Team
 Kaylie Stuteville
 M.S. Integrated Design & Media, NYU Tandon  
 Research: Geometry-Aware AI, Affordance Detection, Emotion-Aware NPC Systems  
