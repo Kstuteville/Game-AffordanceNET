@@ -9,7 +9,7 @@
 import os
 import numpy as np
 import open3d as o3d
-
+#try 49513
 # Paths
 mesh_dir = "/Volumes/T7/data_v0/331/objs"
 out_dir = "processed_outputs"

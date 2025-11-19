@@ -42,7 +42,7 @@ def main():
         w = csv.DictWriter(f, fieldnames=list(flat[0].keys()))
         w.writeheader(); w.writerows(flat)
 
-    print(f"✅ Wrote {OUT_JSON} and {OUT_CSV} with {len(flat)} rows")
+    print(f" Wrote {OUT_JSON} and {OUT_CSV} with {len(flat)} rows")
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,18 @@
+"""
+Day 3 — Map PartNet Part Labels to Human-Readable Names (Chair 331)
+
+- Load raw point cloud + per-point labels
+- Parse the PartNet JSON hierarchy
+- Build a label → name lookup table
+- Visualize parts with consistent colors
+- Save mappings for training and debugging
+"""
+
+
 import os, json, numpy as np, open3d as o3d
 import matplotlib.pyplot as plt, matplotlib.patches as mpatches
 
-base_dir = "/Volumes/T7/data_v0/331"
+base_dir = "/Volumes/T7/data_v0/49513"
 points_file = os.path.join(base_dir, "point_sample", "sample-points-all-pts-nor-rgba-10000.txt")
 labels_file = os.path.join(base_dir, "point_sample", "sample-points-all-label-10000.txt")
 json_file = os.path.join(base_dir, "result_after_merging.json")

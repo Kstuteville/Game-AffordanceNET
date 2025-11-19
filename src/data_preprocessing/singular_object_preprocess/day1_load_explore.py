@@ -1,83 +1,123 @@
-# -------------------------------
-# Day 1 – Load & Normalize (Chair 331)
-# -------------------------------
-# Loads point cloud and labels for a PartNet chair,
-# reorients from Y-up to Z-up, normalizes to unit sphere,
-# and saves outputs to disk for downstream use.
-# -------------------------------
+"""
+Day 1 — Load + Normalize a PartNet figure (Chair ID: 331) but you
+can you for any object
+#try 42
+#try 49513
+
+- Load raw point samples + normals + labels
+- Convert PartNet's Y-up coordinates to Z-up
+- Normalize object to a unit sphere
+- Save a clean .npy bundle for training
+- Preview point cloud for sanity checking
+"""
 
 import os
 import numpy as np
 import open3d as o3d
 import matplotlib.pyplot as plt
 
-# config
-base_dir = "/Volumes/T7/data_v0/331/point_sample"
-points_file = os.path.join(base_dir, "sample-points-all-pts-nor-rgba-10000.txt")
-labels_file = os.path.join(base_dir, "sample-points-all-label-10000.txt")
 
-# load
-pointdata = np.loadtxt(points_file)
-points = pointdata[:, :3]
-normals = pointdata[:, 3:6]
-labels = np.loadtxt(labels_file, dtype=int)
 
-# reorient: Y-up → Z-up
-points = points[:, [0, 2, 1]]
-points[:, 2] *= -1
-normals = normals[:, [0, 2, 1]]
-normals[:, 2] *= -1
+# Paths to data
+DATA_ROOT = "/Volumes/T7/data_v0/49513/point_sample"
+points_path = os.path.join(DATA_ROOT, "sample-points-all-pts-nor-rgba-10000.txt")
+labels_path = os.path.join(DATA_ROOT, "sample-points-all-label-10000.txt")
 
-# normalize
+OUT_DIR = "processed_outputs"
+os.makedirs(OUT_DIR, exist_ok=True)
+
+
+
+# Load point cloud + labels
+print("Loading PartNet chair...")
+raw = np.loadtxt(points_path)
+
+points = raw[:, :3]
+normals = raw[:, 3:6]
+labels = np.loadtxt(labels_path, dtype=int)
+
+print(f"Loaded {len(points)} points.")
+
+
+# Reorient from Y-up → Z-up
+# PartNet uses Y as "up"; games/ML pipelines prefer Z-up.
+def y_up_to_z_up(arr):
+    out = arr[:, [0, 2, 1]].copy()
+    out[:, 2] *= -1
+    return out
+
+points = y_up_to_z_up(points)
+normals = y_up_to_z_up(normals)
+
+
+# Normalize into unit sphere
 centroid = points.mean(axis=0)
 points -= centroid
-scale = np.max(np.linalg.norm(points, axis=1))
-points /= scale
 
-# Save
-os.makedirs("processed_outputs", exist_ok=True)
-np.save("processed_outputs/chair331_norm.npy", {
+max_dist = np.max(np.linalg.norm(points, axis=1))
+points /= max_dist
+
+print("Normalized to unit sphere.")
+
+
+
+# Save preprocessed object
+save_path = os.path.join(OUT_DIR, "chair331_norm.npy")
+
+np.save(save_path, {
     "points": points,
     "normals": normals,
     "labels": labels,
-    "scale": scale,
-    "centroid": centroid
+    "centroid": centroid,
+    "scale": max_dist
 })
 
-# Preview (Matplotlib)
-sample = np.random.choice(len(points), 3000, replace=False)
+print(f"Saved preprocessed chair to {save_path}")
+
+
+
+# Matplotlib preview (QC)
+sample_idx = np.random.choice(len(points), 3000, replace=False)
+
 fig = plt.figure(figsize=(8, 8))
 ax = fig.add_subplot(111, projection="3d")
-ax.scatter(points[sample, 0], points[sample, 1], points[sample, 2],
-           c=labels[sample], cmap="tab10", s=5, alpha=0.8)
-# --- Universal axis fixing for 3D objects of ANY shape ---
-x_limits = [points[:,0].min(), points[:,0].max()]
-y_limits = [points[:,1].min(), points[:,1].max()]
-z_limits = [points[:,2].min(), points[:,2].max()]
 
-x_range = x_limits[1] - x_limits[0]
-y_range = y_limits[1] - y_limits[0]
-z_range = z_limits[1] - z_limits[0]
+ax.scatter(
+    points[sample_idx, 0],
+    points[sample_idx, 1],
+    points[sample_idx, 2],
+    c=labels[sample_idx],
+    cmap="tab10",
+    s=5, alpha=0.85
+)
 
-max_range = max(x_range, y_range, z_range) / 2.0
+#Force axes to same scale
+mins = points.min(axis=0)
+maxs = points.max(axis=0)
+ranges = maxs - mins
+half = np.max(ranges) / 2
+mid = (maxs + mins) / 2
 
-mid_x = np.mean(x_limits)
-mid_y = np.mean(y_limits)
-mid_z = np.mean(z_limits)
+ax.set_xlim(mid[0] - half, mid[0] + half)
+ax.set_ylim(mid[1] - half, mid[1] + half)
+ax.set_zlim(mid[2] - half, mid[2] + half)
 
-ax.set_xlim(mid_x - max_range, mid_x + max_range)
-ax.set_ylim(mid_y - max_range, mid_y + max_range)
-ax.set_zlim(mid_z - max_range, mid_z + max_range)
+ax.set_proj_type("ortho")
+ax.set_title("Chair 331 — Normalized (Z-up)")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
 
-ax.set_proj_type('ortho')  # ensures no perspective distortion
+plt.tight_layout()
+plt.show()
 
-ax.set_title("Chair 331 - Normalized (Z-up)")
-ax.set_xlabel("X"); ax.set_ylabel("Y"); ax.set_zlabel("Z")
-ax.set_box_aspect([1, 1, 1])
-plt.tight_layout(); plt.show()
 
-# Preview (Open3D)
+# Open3D preview (nicer vis)
 pcd = o3d.geometry.PointCloud()
 pcd.points = o3d.utility.Vector3dVector(points)
 pcd.colors = o3d.utility.Vector3dVector(normals * 0.5 + 0.5)
-o3d.visualization.draw_geometries([pcd], window_name="Chair 335 - Point Cloud")
+
+o3d.visualization.draw_geometries(
+    [pcd],
+    window_name="Chair 331 — Point Cloud"
+)
